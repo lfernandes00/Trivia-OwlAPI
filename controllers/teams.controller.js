@@ -11,5 +11,3 @@ exports.findAll = (req, res) => {
             res.status(200).json(data); // send OK response with all tutorials data
     });
 };
-
-//asdfjkldfjk
