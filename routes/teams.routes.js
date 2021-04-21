@@ -13,6 +13,13 @@ router.use((req, res, next) => {
 router.get('/', teamController.findAll);
 
 router.get('/:teamID', teamController.findOne);
+
+router.delete('/:teamID', teamController.remove);
+
+router.post('/', teamController.create);
+
+router.put('/:teamID', teamController.update);
+
 //send a predefined error message for invalid routes on TEAMS
 router.all('*', function (req, res) {
     res.status(404).json({ message: 'TEAMS: what???' });
