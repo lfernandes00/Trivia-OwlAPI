@@ -10,6 +10,7 @@ router.use((req, res, next) => {
     });
     next()
 })
+
 router.get('/', teamController.findAll);
 
 router.get('/:teamID', teamController.findOne);
