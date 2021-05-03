@@ -35,5 +35,9 @@ db.team = require("./teams.model.js")(sequelize, DataTypes);
 //     .catch(e => {
 //         console.log(e)
 //     });
+db.member = require("./teamMembers.model.js")(sequelize, DataTypes);
+
+db.team.hasMany(db.member);
+db.member.belongsTo(db.team);
 
 module.exports = db;

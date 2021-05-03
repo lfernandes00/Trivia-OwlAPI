@@ -1,6 +1,7 @@
 const express = require('express');
 let router = express.Router();
 const teamController = require('../controllers/teams.controller');
+const memberRouter = require('../routes/teamMember.routes');
 // middleware for all routes related with teams
 router.use((req, res, next) => {
     const start = Date.now();
@@ -20,6 +21,8 @@ router.delete('/:teamID', teamController.remove);
 router.post('/', teamController.create);
 
 router.put('/:teamID', teamController.update);
+
+router.use('/:teamID/members', memberRouter);
 
 //send a predefined error message for invalid routes on TEAMS
 router.all('*', function (req, res) {
