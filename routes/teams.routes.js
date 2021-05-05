@@ -2,6 +2,7 @@ const express = require('express');
 let router = express.Router();
 const teamController = require('../controllers/teams.controller');
 const memberRouter = require('../routes/teamMember.routes');
+const trophieRouter = require('../routes/teamTrophie.routes');
 // middleware for all routes related with teams
 router.use((req, res, next) => {
     const start = Date.now();
@@ -23,6 +24,8 @@ router.post('/', teamController.create);
 router.put('/:teamID', teamController.update);
 
 router.use('/:teamID/members', memberRouter);
+
+router.use('/:teamID/trophies', trophieRouter);
 
 //send a predefined error message for invalid routes on TEAMS
 router.all('*', function (req, res) {

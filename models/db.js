@@ -36,8 +36,12 @@ db.team = require("./teams.model.js")(sequelize, DataTypes);
 //         console.log(e)
 //     });
 db.member = require("./teamMembers.model.js")(sequelize, DataTypes);
+db.trophie = require("./teamTrophies.model.js")(sequelize, DataTypes);
 
 db.team.hasMany(db.member);
 db.member.belongsTo(db.team);
+
+db.team.hasMany(db.trophie);
+db.trophie.belongsTo(db.team);
 
 module.exports = db;

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const memberController = require("../controllers/teamMembers.controller");
+const trophieController = require("../controllers/teamTrophies.controller");
 
 // express router
 let router = express.Router({ mergeParams: true });
@@ -18,11 +18,11 @@ router.use((req, res, next) => {
 
 
 
-router.get('/', memberController.findAll);
+router.get('/', trophieController.findAll);
 
-router.post('/', memberController.create);
+router.post('/', trophieController.create);
 
-router.delete('/:memberID', memberController.delete);
+router.delete('/:trophieID', trophieController.delete);
 
 router.all('*', function (req, res) {
     //send an predefined error message 

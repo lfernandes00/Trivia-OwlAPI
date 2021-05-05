@@ -1,11 +1,12 @@
 const db = require("../models/db.js");
 const Team = db.team;
 const Member = db.member;
+const Trophie = db.trophie;
 
 const { Op } = require('sequelize');
 
 exports.findAll = (req, res) => {
-    Member.findAll()
+    Trophie.findAll({where: {teamId: req.params.teamID}})
         .then(data => {
             res.status(200).json(data);
         })
@@ -18,20 +19,20 @@ exports.findAll = (req, res) => {
 };
 
 exports.create = (req, res) => {
-    if (!req.body || !req.body.username || !req.body.name || !req.body.course) {
+    if (!req.body || !req.body.description || !req.body.points) {
         res.status(400).json({ message: "Check if all the values are filled!" });
         return;
     }
 
-    console.log(req.body.username, req.body.name, req.body.course, req.params.teamID);
+    console.log(req.body.description, req.body.points, req.params.teamID);
     // Save Comment in the database
-    Member.create({
-        username: req.body.username, name: req.body.name, course: req.body.course, teamId: req.params.teamID
+    Trophie.create({
+        description: req.body.description, points: req.body.points, teamId: req.params.teamID
     })
         .then(data => {
             res.status(201).json({
-                message: "New member created.", location: "/teams/" +
-                    req.params.teamID + "/members/" + data.id
+                message: "New trophie created.", location: "/teams/" +
+                    req.params.teamID + "/trophies/" + data.id
             });
         })
         .catch(err => {
@@ -39,23 +40,23 @@ exports.create = (req, res) => {
                 res.status(400).json({ message: err.errors[0].message });
             else
                 res.status(500).json({
-                    message: err.message || "Some error occurred while creating the Member."
+                    message: err.message || "Some error occurred while creating the trophie."
                 });
         });
 };
 
 exports.delete = (req, res) => {
-    console.log(req.params.teamID, req.params.memberID);
+    console.log(req.params.teamID, req.params.trophieID);
     // Save Comment in the database
-    Member.destroy({ where: { id: req.params.memberID, teamId: req.params.teamID } })
+    Trophie.destroy({ where: { id: req.params.trophieID, teamId: req.params.teamID } })
         .then(num => {
             if (num == 1) {
-                res.status(200).json({ message: `Member with id ${req.params.memberID} deleted with success` })
+                res.status(200).json({ message: `Trophie with id ${req.params.trophieID} deleted with success` })
             } else {
-                res.status(404).json({ message: `Member with id ${req.params.memberID} not found!` })
+                res.status(404).json({ message: `Trophie with id ${req.params.trophieID} not found!` })
             }
         })
         .catch(err => {
-            res.status(500).json({ message: err.message || "Some error occurred while deleting the member!" })
+            res.status(500).json({ message: err.message || "Some error occurred while deleting the trophie!" })
         })
 };

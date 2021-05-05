@@ -8,9 +8,9 @@ app.use(cors()); //enable ALL CORS requests (client requests from other domain)
 app.use(express.json()); //enable parsing JSON body data
 // root route -- /api/
 app.get('/', function (req, res) {
-    res.status(200).json({ message: 'home -- TEAMS api' });
+    res.status(200).json({ message: 'home -- TRIVIA-OWL API' });
 });
-// routing middleware for resource TUTORIALS
+// routing middleware for resource teams
 app.use('/teams', require('./routes/teams.routes.js'))
 // handle invalid routes
 app.get('*', function (req, res) {
