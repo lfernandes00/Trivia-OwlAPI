@@ -4,6 +4,7 @@ const Member = db.member;
 
 const { Op } = require('sequelize');
 
+// Get all members
 exports.findAll = (req, res) => {
     Member.findAll()
         .then(data => {
@@ -17,6 +18,7 @@ exports.findAll = (req, res) => {
         });
 };
 
+// Add new member
 exports.create = (req, res) => {
     if (!req.body || !req.body.username || !req.body.name || !req.body.course) {
         res.status(400).json({ message: "Check if all the values are filled!" });
@@ -44,6 +46,7 @@ exports.create = (req, res) => {
         });
 };
 
+// Delete member
 exports.delete = (req, res) => {
     console.log(req.params.teamID, req.params.memberID);
     // Save Comment in the database

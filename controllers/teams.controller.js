@@ -4,6 +4,7 @@ const Team = db.team;
 
 const { Op } = require('sequelize');
 
+// get all teams
 exports.findAll = (req, res) => {
     Team.findAll()
         .then(data => {
@@ -17,6 +18,7 @@ exports.findAll = (req, res) => {
         });
 };
 
+// get team by id
 exports.findOne = (req, res) => {
     Team.findByPk(req.params.teamID)
         .then(data => {
@@ -30,6 +32,7 @@ exports.findOne = (req, res) => {
         })
 };
 
+// Remove team
 exports.remove = (req, res) => {
     Team.destroy({ where: { id: req.params.teamID } })
         .then(num => {
@@ -44,6 +47,7 @@ exports.remove = (req, res) => {
         })
 };
 
+// create new team
 exports.create = (req, res) => {
     if (!req.body || !req.body.name || !req.body.creater || !req.body.photo || !req.body.level || !req.body.points) {
         res.status(400).json({ message: "Check if all the values are filled!" });
@@ -62,6 +66,7 @@ exports.create = (req, res) => {
         })
 };
 
+// Update team informations
 exports.update = (req, res) => {
     if (!req.body || !req.body.name || !req.body.creater || !req.body.photo || !req.body.level || !req.body.points) {
         res.status(400).json({ message: "Check if all the values are filled!" });

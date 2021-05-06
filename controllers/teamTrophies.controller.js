@@ -5,6 +5,7 @@ const Trophie = db.trophie;
 
 const { Op } = require('sequelize');
 
+// get all team trophies
 exports.findAll = (req, res) => {
     Trophie.findAll({where: {teamId: req.params.teamID}})
         .then(data => {
@@ -18,6 +19,7 @@ exports.findAll = (req, res) => {
         });
 };
 
+// add new trophie
 exports.create = (req, res) => {
     if (!req.body || !req.body.description || !req.body.points) {
         res.status(400).json({ message: "Check if all the values are filled!" });
@@ -43,20 +45,4 @@ exports.create = (req, res) => {
                     message: err.message || "Some error occurred while creating the trophie."
                 });
         });
-};
-
-exports.delete = (req, res) => {
-    console.log(req.params.teamID, req.params.trophieID);
-    // Save Comment in the database
-    Trophie.destroy({ where: { id: req.params.trophieID, teamId: req.params.teamID } })
-        .then(num => {
-            if (num == 1) {
-                res.status(200).json({ message: `Trophie with id ${req.params.trophieID} deleted with success` })
-            } else {
-                res.status(404).json({ message: `Trophie with id ${req.params.trophieID} not found!` })
-            }
-        })
-        .catch(err => {
-            res.status(500).json({ message: err.message || "Some error occurred while deleting the trophie!" })
-        })
 };

@@ -22,7 +22,6 @@ router.get('/', trophieController.findAll);
 
 router.post('/', trophieController.create);
 
-router.delete('/:trophieID', trophieController.delete);
 
 router.all('*', function (req, res) {
     //send an predefined error message 
