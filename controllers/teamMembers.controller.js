@@ -1,6 +1,6 @@
 const db = require("../models/db.js");
 const Team = db.team;
-const Member = db.member;
+const Member = db.teamMember;
 
 const { Op } = require('sequelize');
 

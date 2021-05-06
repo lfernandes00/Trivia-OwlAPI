@@ -26,22 +26,15 @@ db.sequelize = sequelize;
 
 //export TEAM model
 db.team = require("./teams.model.js")(sequelize, DataTypes);
+db.teamMember = require("./teamMembers.model.js")(sequelize, DataTypes);
+db.teamTrophie = require("./teamTrophies.model.js")(sequelize, DataTypes);
 
-// optionally: SYNC
-// db.sequelize.sync()
-//     .then(() => {
-//         console.log('DB is successfully synchronized')
-//     })
-//     .catch(e => {
-//         console.log(e)
-//     });
-db.member = require("./teamMembers.model.js")(sequelize, DataTypes);
-db.trophie = require("./teamTrophies.model.js")(sequelize, DataTypes);
+db.user = require("./users.model.js")(sequelize, DataTypes);
 
-db.team.hasMany(db.member);
-db.member.belongsTo(db.team);
+db.team.hasMany(db.teamMember);
+db.teamMember.belongsTo(db.team);
 
-db.team.hasMany(db.trophie);
-db.trophie.belongsTo(db.team);
+db.team.hasMany(db.teamTrophie);
+db.teamTrophie.belongsTo(db.team);
 
 module.exports = db;

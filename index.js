@@ -12,6 +12,9 @@ app.get('/', function (req, res) {
 });
 // routing middleware for resource teams
 app.use('/teams', require('./routes/teams.routes.js'))
+
+// routing middleware for resource users
+app.use('/users', require('./routes/users.routes.js'));
 // handle invalid routes
 app.get('*', function (req, res) {
     res.status(404).json({ message: 'WHAT???' });
