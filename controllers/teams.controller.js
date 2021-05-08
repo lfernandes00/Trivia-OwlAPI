@@ -3,6 +3,7 @@ const db = require("../models/db.js");
 const Team = db.team;
 
 const { Op } = require('sequelize');
+const { teamMember, teamTrophie } = require("../models/db.js");
 
 // get all teams
 exports.findAll = (req, res) => {
@@ -20,7 +21,16 @@ exports.findAll = (req, res) => {
 
 // get team by id
 exports.findOne = (req, res) => {
-    Team.findByPk(req.params.teamID)
+    Team.findByPk(req.params.teamID, {
+        include: [
+            {
+                model: teamMember
+            },
+            {
+                model: teamTrophie
+            }
+        ]
+    })
         .then(data => {
             if (data === null)
                 res.status(404).json({ message: `Team with id ${req.params.teamID} not found!` })

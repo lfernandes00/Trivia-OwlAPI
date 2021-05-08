@@ -49,8 +49,52 @@ exports.remove = (req, res) => {
 
 // create new team
 exports.create = (req, res) => {
-    if (!req.body || !req.body.username || !req.body.password || !req.body.name || !req.body.birthDate || !req.body.course || !req.body.level || !req.body.photo || !req.body.type || !req.body.doneActivities || !req.body.points || !req.body.team) {
-        res.status(400).json({ message: "Check if all the values are filled!" });
+    if (!req.body) {
+        res.status(400).json({ message: "Request body can not be empty!" });
+        return;
+    }
+    else if (!req.body.username) {
+        res.status(400).json({ message: "Username can not be empty!" });
+        return;
+    }
+    else if (!req.body.password) {
+        res.status(400).json({ message: "Password can not be empty!" });
+        return;
+    }
+    else if (!req.body.name) {
+        res.status(400).json({ message: "Name can not be empty!" });
+        return;
+    }
+    else if (!req.body.birthDate) {
+        res.status(400).json({ message: "birthDate can not be empty!" });
+        return;
+    }
+    else if (!req.body.course) {
+        res.status(400).json({ message: "Course can not be empty!" });
+        return;
+    }
+    else if (!req.body.level) {
+        res.status(400).json({ message: "Level can not be empty!" });
+        return;
+    }
+    else if (!req.body.photo) {
+        res.status(400).json({ message: "Photo can not be empty!" });
+        return;
+    }
+    else if (!req.body.type) {
+        res.status(400).json({ message: "Type can not be empty!" });
+        return;
+    }
+    else if (!req.body.doneActivities) {
+        res.status(400).json({ message: "doneActivities can not be empty!" });
+        return;
+    }
+    else if (!req.body.points) {
+        res.status(400).json({ message: "Points can not be empty!" });
+        return;
+    }
+    else if (!req.body.team) {
+        res.status(400).json({ message: "team can not be empty!" });
         return;
     }
 
@@ -68,8 +112,52 @@ exports.create = (req, res) => {
 
 // Update team informations
 exports.update = (req, res) => {
-    if (!req.body || !req.body.username || !req.body.password || !req.body.name || !req.body.birthDate || !req.body.course || !req.body.level || !req.body.photo || !req.body.type || !req.body.doneActivities || !req.body.points || !req.body.team) {
-        res.status(400).json({ message: "Check if all the values are filled!" });
+    if (!req.body) {
+        res.status(400).json({ message: "Request body can not be empty!" });
+        return;
+    }
+    else if (!req.body.username) {
+        res.status(400).json({ message: "Username can not be empty!" });
+        return;
+    }
+    else if (!req.body.password) {
+        res.status(400).json({ message: "Password can not be empty!" });
+        return;
+    }
+    else if (!req.body.name) {
+        res.status(400).json({ message: "Name can not be empty!" });
+        return;
+    }
+    else if (!req.body.birthDate) {
+        res.status(400).json({ message: "birthDate can not be empty!" });
+        return;
+    }
+    else if (!req.body.course) {
+        res.status(400).json({ message: "Course can not be empty!" });
+        return;
+    }
+    else if (!req.body.level) {
+        res.status(400).json({ message: "Level can not be empty!" });
+        return;
+    }
+    else if (!req.body.photo) {
+        res.status(400).json({ message: "Photo can not be empty!" });
+        return;
+    }
+    else if (!req.body.type) {
+        res.status(400).json({ message: "Type can not be empty!" });
+        return;
+    }
+    else if (!req.body.doneActivities) {
+        res.status(400).json({ message: "doneActivities can not be empty!" });
+        return;
+    }
+    else if (!req.body.points) {
+        res.status(400).json({ message: "Points can not be empty!" });
+        return;
+    }
+    else if (!req.body.team) {
+        res.status(400).json({ message: "team can not be empty!" });
         return;
     }
 

@@ -1,6 +1,6 @@
 const express = require('express');
 let router = express.Router();
-const userController = require('../controllers/teams.controller');
+const userController = require('../controllers/users.controller');
 // middleware for all routes related with teams
 router.use((req, res, next) => {
     const start = Date.now();
@@ -11,23 +11,19 @@ router.use((req, res, next) => {
     next()
 })
 
-router.get('/', teamController.findAll);
+router.get('/', userController.findAll);
 
-router.get('/:teamID', teamController.findOne);
+router.get('/:userID', userController.findOne);
 
-router.delete('/:teamID', teamController.remove);
+router.delete('/:userID', userController.remove);
 
-router.post('/', teamController.create);
+router.post('/', userController.create);
 
-router.put('/:teamID', teamController.update);
-
-router.use('/:teamID/members', memberRouter);
-
-router.use('/:teamID/trophies', trophieRouter);
+router.put('/:userID', userController.update);
 
 //send a predefined error message for invalid routes on TEAMS
 router.all('*', function (req, res) {
-    res.status(404).json({ message: 'TEAMS: what???' });
+    res.status(404).json({ message: 'USERS: what???' });
 })
 // EXPORT ROUTES (required by APP)
 module.exports = router;
