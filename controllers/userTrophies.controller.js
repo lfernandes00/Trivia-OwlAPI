@@ -1,21 +1,21 @@
 const db = require("../models/db.js");
-const Team = db.team;
-const Member = db.teamMember;
-const Trophie = db.teamTrophie;
+const User = db.user;
+const Trophie = db.userTrophie;
 
 const { Op } = require('sequelize');
 
 // get all team trophies
 exports.findAll = (req, res) => {
-    console.log(req.params.teamID)
-    Trophie.findAll({where: {teamId: req.params.teamID}})
+    console.log(req.params.userID)
+    Trophie.findAll({where: {userId: req.params.userID}})
+    
         .then(data => {
             res.status(200).json(data);
         })
         .catch(err => {
             res.status(500).json({
                 message:
-                    err.message || "Some error occurred while retrieving teams."
+                    err.message || "Some error occurred while retrieving user trophies."
             });
         });
 };
@@ -35,15 +35,15 @@ exports.create = (req, res) => {
         return;
     }
 
-    console.log(req.body.description, req.body.points, req.params.teamID);
+    console.log(req.body.description, req.body.points, req.params.userID);
     // Save Comment in the database
     Trophie.create({
-        description: req.body.description, points: req.body.points, teamId: req.params.teamID
+        description: req.body.description, points: req.body.points, userId: req.params.userID
     })
         .then(data => {
             res.status(201).json({
-                message: "New trophie created.", location: "/teams/" +
-                    req.params.teamID + "/trophies/" + data.id
+                message: "New trophie created.", location: "/users/" +
+                    req.params.userID + "/trophies/" + data.id
             });
         })
         .catch(err => {

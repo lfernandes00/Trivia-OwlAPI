@@ -20,8 +20,20 @@ exports.findAll = (req, res) => {
 
 // Add new member
 exports.create = (req, res) => {
-    if (!req.body || !req.body.username || !req.body.name || !req.body.course) {
-        res.status(400).json({ message: "Check if all the values are filled!" });
+    if (!req.body) {
+        res.status(400).json({ message: "Request body can not be empty!" });
+        return;
+    }
+    else if (!req.body.username) {
+        res.status(400).json({message: "Username can not be empty!"})
+        return;
+    }
+    else if (!req.body.name) {
+        res.status(400).json({message: "Name can not be empty!"})
+        return;
+    }
+    else if (!req.body.course) {
+        res.status(400).json({message: "Course can not be empty!"})
         return;
     }
 

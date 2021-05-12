@@ -59,8 +59,28 @@ exports.remove = (req, res) => {
 
 // create new team
 exports.create = (req, res) => {
-    if (!req.body || !req.body.name || !req.body.creater || !req.body.photo || !req.body.level || !req.body.points) {
-        res.status(400).json({ message: "Check if all the values are filled!" });
+    if (!req.body) {
+        res.status(400).json({ message: "Request body can not be empty!" });
+        return;
+    }
+    else if (!req.body.name) {
+        res.status(400).json({message: "Name can not be empty!"})
+        return;
+    }
+    else if (!req.body.creater) {
+        res.status(400).json({message: "Creater can not be empty!"})
+        return;
+    }
+    else if (!req.body.photo) {
+        res.status(400).json({message: "Photo can not be empty!"})
+        return;
+    }
+    else if (!req.body.level) {
+        res.status(400).json({message: "Level can not be empty!"})
+        return;
+    }
+    else if (!req.body.points) {
+        res.status(400).json({message: "Points can not be empty!"})
         return;
     }
 
@@ -78,8 +98,28 @@ exports.create = (req, res) => {
 
 // Update team informations
 exports.update = (req, res) => {
-    if (!req.body || !req.body.name || !req.body.creater || !req.body.photo || !req.body.level || !req.body.points) {
-        res.status(400).json({ message: "Check if all the values are filled!" });
+    if (!req.body) {
+        res.status(400).json({ message: "Request body can not be empty!" });
+        return;
+    }
+    else if (!req.body.name) {
+        res.status(400).json({message: "Name can not be empty!"})
+        return;
+    }
+    else if (!req.body.creater) {
+        res.status(400).json({message: "Creater can not be empty!"})
+        return;
+    }
+    else if (!req.body.photo) {
+        res.status(400).json({message: "Photo can not be empty!"})
+        return;
+    }
+    else if (!req.body.level) {
+        res.status(400).json({message: "Level can not be empty!"})
+        return;
+    }
+    else if (!req.body.points) {
+        res.status(400).json({message: "Points can not be empty!"})
         return;
     }
 
