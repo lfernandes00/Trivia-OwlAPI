@@ -5,17 +5,24 @@ const Member = db.teamMember;
 const { Op } = require('sequelize');
 
 // Get all members
-exports.findAll = (req, res) => {
-    Member.findAll()
-        .then(data => {
-            res.status(200).json(data);
-        })
-        .catch(err => {
-            res.status(500).json({
-                message:
-                    err.message || "Some error occurred while retrieving teams."
+exports.findAll = async (req, res) => {
+    try {
+        let team = await Team.findByPk(req.params.teamID);
+        if (team === null) {
+            res.status(404).json({
+                message: `Not found Team with id ${req.params.teamID}.`
             });
+            return;
+        }
+        let members = await team.getTeamMembers();
+        res.status(200).json(members);
+
+    }
+    catch (err) {
+        res.status(500).json({
+            message: err.message || `Error retrieving Comments for Team with id ${req.params.teamID}.`
         });
+    }
 };
 
 // Add new member

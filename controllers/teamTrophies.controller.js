@@ -6,18 +6,32 @@ const Trophie = db.teamTrophie;
 const { Op } = require('sequelize');
 
 // get all team trophies
-exports.findAll = (req, res) => {
-    console.log(req.params.teamID)
-    Trophie.findAll({where: {teamId: req.params.teamID}})
-        .then(data => {
-            res.status(200).json(data);
-        })
-        .catch(err => {
-            res.status(500).json({
-                message:
-                    err.message || "Some error occurred while retrieving teams."
+exports.findAll = async (req, res) => {
+    try {
+        let team = await Team.findByPk(req.params.teamID);
+        if (team === null) {
+            res.status(404).json({
+                message: `Not found Team with id ${req.params.teamID}.`
             });
+            return;
+        }
+        let trophies = await team.getTeamTrophies();
+        if (trophies.length == 0) {
+            res.status(404).json({
+                message: `Team with id ${req.params.teamID} has no trophies!`
+            })
+        }
+        else {
+            res.status(200).json(trophies);
+        }
+        
+
+    }
+    catch (err) {
+        res.status(500).json({
+            message: err.message || `Error retrieving Trophies for Team with id ${req.params.teamID}.`
         });
+    }
 };
 
 // add new trophie
