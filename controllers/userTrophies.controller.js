@@ -5,19 +5,32 @@ const Trophie = db.userTrophie;
 const { Op } = require('sequelize');
 
 // get all team trophies
-exports.findAll = (req, res) => {
-    console.log(req.params.userID)
-    Trophie.findAll({where: {userId: req.params.userID}})
-    
-        .then(data => {
-            res.status(200).json(data);
-        })
-        .catch(err => {
-            res.status(500).json({
-                message:
-                    err.message || "Some error occurred while retrieving user trophies."
+exports.findAll = async (req, res) => {
+    try {
+        let user = await User.findByPk(req.params.userID);
+        if (user === null) {
+            res.status(404).json({
+                message: `Not found User with id ${req.params.userID}.`
             });
+            return;
+        }
+        let trophies = await user.getUserTrophies();
+        if (trophies.length == 0) {
+            res.status(404).json({
+                message: `User with id ${req.params.userID} has no trophies!`
+            })
+        }
+        else {
+            res.status(200).json(trophies);
+        }
+        
+
+    }
+    catch (err) {
+        res.status(500).json({
+            message: err.message || `Error retrieving Trophies for User with id ${req.params.userID}.`
         });
+    }
 };
 
 // add new trophie
@@ -32,6 +45,13 @@ exports.create = (req, res) => {
     }
     else if (!req.body.points) {
         res.status(400).json({message: "Points can not be empty!"});
+        return;
+    }
+
+    let user = User.findByPk(req.params.userID)
+
+    if (user === null) {
+        res.status(404).json({message: `Not found User with id ${req.params.id}!`})
         return;
     }
 

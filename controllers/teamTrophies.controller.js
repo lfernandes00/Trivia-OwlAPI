@@ -49,6 +49,13 @@ exports.create = (req, res) => {
         return;
     }
 
+    let team = Team.findByPk(req.params.teamID)
+    console.log(team, "teste")
+    if (team == null) {
+        res.status(404).json({message: `Not found team with id ${req.params.teamID}!`})
+        return;
+    }
+
     console.log(req.body.description, req.body.points, req.params.teamID);
     // Save Comment in the database
     Trophie.create({
