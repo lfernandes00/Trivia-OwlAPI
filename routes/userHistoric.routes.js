@@ -1,6 +1,6 @@
 // const express = require('express');
 
-// const trophieController = require("../controllers/teamTrophies.controller");
+// const historicController = require("../controllers/userHistoric.controller");
 
 // // express router
 // let router = express.Router({ mergeParams: true });
@@ -18,14 +18,14 @@
 
 
 
-// router.get('/', trophieController.findAll);
+// router.get('/', historicController.findAll);
 
-// router.post('/', trophieController.create);
+// router.post('/', historicController.create);
 
 
 // router.all('*', function (req, res) {
 //     //send an predefined error message 
-//     res.status(404).json({ message: 'Members: what???' });
+//     res.status(404).json({ message: 'userHistoric: what???' });
 // })
 
 // module.exports = router;

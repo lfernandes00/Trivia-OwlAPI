@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
             validate: { notNull: { msg: "Course can not be empty!" } } 
         },
         level: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: { notNull: { msg: "Level can not be empty!" } } 
         },
@@ -34,11 +34,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: { notNull: { msg: "Photo can not be empty!" } } 
-        },
-        type: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: { notNull: { msg: "Type can not be empty!" } } 
         },
         doneActivities: {
             type: DataTypes.INTEGER,
@@ -50,10 +45,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             validate: { notNull: { msg: "Points can not be empty!" } } 
         },
-        team: {
+        teamId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            validate: { notNull: { msg: "team can not be empty!" } } 
+            validate: { notNull: { msg: "teamId can not be empty!" } } 
+        },
+        pending: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: { notNull: { msg: "Pending can not be empty!" } } 
         },
     }, {
         timestamps: false

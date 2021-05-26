@@ -11,13 +11,13 @@ app.get('/', function (req, res) {
     res.status(200).json({ message: 'home -- TRIVIA-OWL API' });
 });
 // routing middleware for resource teams
-app.use('/teams', require('./routes/teams.routes.js'))
+// app.use('/teams', require('./routes/teams.routes.js'))
 
 // routing middleware for resource users
 app.use('/users', require('./routes/users.routes.js'));
 
 // routing middleware for resource USER AUTH
-app.use('/userAuth', require('./routes/userAuth.routes.js'))
+// app.use('/userAuth', require('./routes/userAuth.routes.js'))
 // handle invalid routes
 app.get('*', function (req, res) {
     res.status(404).json({ message: 'WHAT???' });
