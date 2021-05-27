@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-    const Trophie = sequelize.define("userTrophie", {
-        userId: {
+    const Like = sequelize.define("activityLike", {
+        activityId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            validate: { notNull: { msg: "userId can not be empty!" } }
+            validate: { notNull: { msg: "activityId can not be empty!" } }
         },
-        trophyId: {
+        userId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {notNull: {msg: "trophyId can not be empty!"}}
@@ -13,5 +13,5 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: false
     });
-    return Trophie;
+    return Like;
 };

@@ -1,31 +1,31 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define("user", {
-        username: {
+    const Activity = sequelize.define("activities", {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: { notNull: { msg: "Username can not be empty!" } } 
         },
-        password: {
+        course: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: { notNull: { msg: "Password can not be empty!" } } 
         },
-        name: {
+        subject: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: { notNull: { msg: "Name can not be empty!" } } 
         },
-        birthDate: {
-            type: DataTypes.DATE,
+        points: {
+            type: DataTypes.INTEGER,
             allowNull: false,
             validate: { notNull: { msg: "Birth Date can not be empty!" } } 
         },
-        course: {
+        type: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: { notNull: { msg: "Course can not be empty!" } } 
         },
-        level: {
+        desc: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: { notNull: { msg: "Level can not be empty!" } } 
@@ -35,14 +35,36 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             validate: { notNull: { msg: "Photo can not be empty!" } } 
         },
-        doneActivities: {
-            type: DataTypes.INTEGER
+        question1: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: { notNull: { msg: "doneActivities can not be empty!" } } 
         },
-        points: {
-            type: DataTypes.INTEGER
+        question2: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: { notNull: { msg: "Points can not be empty!" } } 
+        },
+        question3: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: { notNull: { msg: "teamId can not be empty!" } } 
+        },
+        question4: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: { notNull: { msg: "Pending can not be empty!" } } 
+        },
+        question5: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: { notNull: { msg: "Pending can not be empty!" } } 
+        },
+        pending: {
+            type: DataTypes.INTEGER,
         },
     }, {
         timestamps: false
     });
-    return User;
+    return Activity;
 };

@@ -1,8 +1,8 @@
 const express = require('express');
 let router = express.Router();
 const userController = require('../controllers/users.controller');
-// const trophieRouter = require('../routes/userTrophies.routes');
-// const historicRouter = require('../routes/userHistoric.routes');
+const trophieRouter = require('../routes/userTrophies.routes');
+const typeController = require('../controllers/userTypes.controller');
 // middleware for all routes related with teams
 router.use((req, res, next) => {
     const start = Date.now();
@@ -18,12 +18,14 @@ router.get('/', userController.findAll);
 router.get('/:userID', userController.findOne);
 
 router.delete('/:userID', userController.remove);
+// router.delete('/:userID', typeController.remove);
 
 router.post('/', userController.create);
+// router.post('/', typeController.create);
 
 router.put('/:userID', userController.update);
 
-// router.use('/:userID/trophies', trophieRouter);
+router.use('/:userID/trophies', trophieRouter);
 
 // router.use('/:userID/historic', historicRouter);
 

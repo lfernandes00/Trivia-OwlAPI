@@ -24,25 +24,26 @@ sequelize.authenticate()
 const db = {};
 db.sequelize = sequelize;
 
-//export TEAM model
-// db.team = require("./teams.model.js")(sequelize, DataTypes);
-// db.teamMember = require("./teamMembers.model.js")(sequelize, DataTypes);
-// db.teamTrophie = require("./teamTrophies.model.js")(sequelize, DataTypes);
 
 db.user = require("./users.model.js")(sequelize, DataTypes);
-// db.userTrophie = require("./userTrophies.model.js")(sequelize, DataTypes);
+db.userType = require("./userTypes.model.js")(sequelize, DataTypes);
+db.userTrophie = require("./userTrophies.model.js")(sequelize, DataTypes);
+db.activity = require("./activities.model.js")(sequelize, DataTypes);
+db.activityLike = require("./activityLikes.model.js")(sequelize, DataTypes);
 // db.userHistoric = require("./userHistoric.model.js")(sequelize, DataTypes);
 
-// db.user.hasMany(db.userTrophie);
-// db.userTrophie.belongsTo(db.user);
+db.user.hasOne(db.userType, {foreignKey: 'id'});
+db.userType.belongsTo(db.user, {foreignKey: 'userId'});
+
+db.user.hasMany(db.userTrophie, {foreignKey: 'userId'});
+db.userTrophie.belongsTo(db.user, {foreignKey: 'userId'});
+
+db.activity.hasMany(db.activityLike, {foreignKey: 'activityId'})
+db.activityLike.belongsTo(db.activity, {foreignKey: 'activityId'})
 
 // db.user.hasMany(db.userHistoric);
 // db.userHistoric.belongsTo(db.user);
 
-// db.team.hasMany(db.teamMember);
-// db.teamMember.belongsTo(db.team);
 
-// db.team.hasMany(db.teamTrophie);
-// db.teamTrophie.belongsTo(db.team);
 
 module.exports = db;
