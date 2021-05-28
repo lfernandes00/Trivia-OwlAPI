@@ -83,3 +83,5 @@ exports.create = async (req, res) => {
             });
     }
 };
+
+// update user points and activities done
