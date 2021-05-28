@@ -1,6 +1,8 @@
 // get resource model (definition and DB operations)
 const db = require("../models/db.js");
 const User = db.user;
+const Score = db.activityScore;
+const Trophy = db.userTrophy;
 
 const { Op } = require('sequelize');
 const { user } = require("../models/db.js");
@@ -33,6 +35,12 @@ exports.findOne = (req, res) => {
         include: [
             {
                 model: userType, attributes: ["type"] // remove ALL data retrieved from join table
+            },
+            {
+                model: Score, attributes: ["activityId"] // user historic
+            },
+            {
+                model: Trophy, attributes: ["trophyId"] // user trophies
             }
         ]
     })
