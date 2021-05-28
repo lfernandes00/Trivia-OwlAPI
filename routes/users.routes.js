@@ -21,15 +21,12 @@ router.delete('/:userID', userController.remove);
 // router.delete('/:userID', typeController.remove);
 
 router.post('/', userController.create);
-// router.post('/', typeController.create);
 
 router.put('/:userID', userController.update);
 
 router.use('/:userID/trophies', trophieRouter);
 
-// router.use('/:userID/historic', historicRouter);
-
-//send a predefined error message for invalid routes on TEAMS
+//send a predefined error message for invalid routes on USERS
 router.all('*', function (req, res) {
     res.status(404).json({ message: 'USERS: what???' });
 })
