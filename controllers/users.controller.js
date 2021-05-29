@@ -2,7 +2,7 @@
 const db = require("../models/db.js");
 const User = db.user;
 const Score = db.activityScore;
-const Trophy = db.userTrophy;
+const Trophy = db.trophy;
 const Type = db.userType;
 
 const { Op } = require('sequelize');
@@ -38,10 +38,7 @@ exports.findOne = (req, res) => {
                 model: Type, attributes: ["type"] // remove ALL data retrieved from join table
             },
             {
-                model: Score, attributes: ["activityId"] // user historic
-            },
-            {
-                model: Trophy, attributes: ["trophyId"] // user trophies
+                model: Trophy, attributes: ["desc"] // user trophies
             }
         ]
     })

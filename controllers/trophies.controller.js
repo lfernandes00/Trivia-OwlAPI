@@ -26,6 +26,7 @@ exports.findAll = (req, res) => {
         });
 };
 
+
 // create new trophy
 exports.create = (req, res) => {
 

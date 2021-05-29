@@ -37,23 +37,15 @@ db.trophy = require("./trophies.model.js")(sequelize, DataTypes);
 db.user.hasOne(db.userType, {foreignKey: 'id'});
 db.userType.belongsTo(db.user, {foreignKey: 'userId'});
 
-db.user.hasMany(db.userTrophy, {foreignKey: 'userId'});
-db.userTrophy.belongsTo(db.user, {foreignKey: 'userId'});
+db.user.belongsToMany(db.trophy, { through: 'userTrophies' });
+db.trophy.belongsToMany(db.user, { through: 'userTrophies' });
 
-db.trophy.hasMany(db.userTrophy, {foreignKey: 'trophyId'})
-db.userTrophy.belongsTo(db.trophy, {foreignKey: 'trophyId'})
-
-db.activity.hasMany(db.activityLike, {foreignKey: 'activityId'})
-db.activityLike.belongsTo(db.activity, {foreignKey: 'activityId'})
+db.user.belongsToMany(db.activity, { through: 'activityLike' })
+db.activity.belongsToMany(db.user, { through: 'activityLike' })
 
 db.activity.hasMany(db.activityScore, {foreignKey: 'activityId'})
 db.activityScore.belongsTo(db.activity, {foreignKey: 'activityId'})
 
-db.user.hasMany(db.activityScore, {foreignKey: 'userId'})
-db.activityScore.belongsTo(db.user, {foreignKey: 'activityId'})
-
-// db.user.hasMany(db.userHistoric);
-// db.userHistoric.belongsTo(db.user);
 
 
 
