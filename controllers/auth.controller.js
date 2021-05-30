@@ -20,7 +20,7 @@ exports.signup = async (req, res) => {
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, 8) // generates hash to password
         });
-        if (req.body.role) {
+        if (req.body.type) {
             let role = await Role.findOne({ where: { name: req.body.role} });
             if (role)await user.setRole(role);
         } else
@@ -90,6 +90,16 @@ exports.isAdmin= async (req, res, next) => {
     
     return res.status(403).send({ message: "Require Admin Role!" });
 };
+
+// exports.isTeacher= async (req, res, next) => {
+//     let user = await User.findByPk(req.loggedUserId);
+//     let type = await user.getUserType();
+    
+//     if (type.type === "docente") 
+//         next();
+    
+//     return res.status(403).send({ message: "Require Teacher Role!" });
+// };
 
 exports.isAdminOrLoggedUser= async (req, res, next) => {
     let user = await User.findByPk(req.loggedUserId);

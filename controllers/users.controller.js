@@ -30,7 +30,7 @@ exports.findAll = (req, res) => {
         });
 };
 
-// get team by id
+// get user by id
 exports.findOne = (req, res) => {
     User.findByPk(req.params.userID, {
         include: [
@@ -38,7 +38,7 @@ exports.findOne = (req, res) => {
                 model: Type, attributes: ["type"] // remove ALL data retrieved from join table
             },
             {
-                model: Trophy, attributes: ["desc"] // user trophies
+                model: Trophy, attributes: ["desc", "points"] // user trophies
             }
         ]
     })
