@@ -1,7 +1,7 @@
 // get resource model (definition and DB operations)
 const db = require("../models/db.js");
 const Activity = db.activity;
-const Like = db.activityLike;
+const User = db.user;
 
 const { Op } = require('sequelize');
 
@@ -24,7 +24,7 @@ exports.findOne = (req, res) => {
     Activity.findByPk(req.params.activityID, {
         include: [
             {
-                model: Like, attributes: ["userId"]
+                model: User, through: { attributes: ['userId'] }
             }
         ]
     })

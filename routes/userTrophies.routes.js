@@ -1,6 +1,6 @@
 const express = require('express');
 
-const trophieController = require("../controllers/userTrophies.controller");
+const trophieController = require("../controllers/trophies.controller");
 
 // express router
 let router = express.Router({ mergeParams: true });

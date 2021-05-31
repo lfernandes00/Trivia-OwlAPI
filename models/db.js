@@ -40,8 +40,8 @@ db.userType.belongsTo(db.user, {foreignKey: 'userId'});
 db.user.belongsToMany(db.trophy, { through: 'userTrophies' });
 db.trophy.belongsToMany(db.user, { through: 'userTrophies' });
 
-db.user.belongsToMany(db.activity, { through: 'activityLike' })
-db.activity.belongsToMany(db.user, { through: 'activityLike' })
+db.user.belongsToMany(db.activity, { through: 'activityLikes' })
+db.activity.belongsToMany(db.user, { through: 'activityLikes' })
 
 db.activity.hasMany(db.activityScore, {foreignKey: 'activityId'})
 db.activityScore.belongsTo(db.activity, {foreignKey: 'activityId'})
