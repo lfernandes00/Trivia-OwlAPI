@@ -32,7 +32,6 @@ db.activity = require("./activities.model.js")(sequelize, DataTypes);
 db.activityLike = require("./activityLikes.model.js")(sequelize, DataTypes);
 db.activityScore = require("./activityScores.model.js")(sequelize, DataTypes);
 db.trophy = require("./trophies.model.js")(sequelize, DataTypes);
-// db.userHistoric = require("./userHistoric.model.js")(sequelize, DataTypes);
 
 db.user.hasOne(db.userType, {foreignKey: 'id'});
 db.userType.belongsTo(db.user, {foreignKey: 'userId'});
@@ -43,8 +42,8 @@ db.trophy.belongsToMany(db.user, { through: 'userTrophies' });
 db.user.belongsToMany(db.activity, { through: 'activityLikes' })
 db.activity.belongsToMany(db.user, { through: 'activityLikes' })
 
-db.activity.hasMany(db.activityScore, {foreignKey: 'activityId'})
-db.activityScore.belongsTo(db.activity, {foreignKey: 'activityId'})
+db.activity.belongsToMany(db.user, { through: 'activityScores' })
+db.user.belongsToMany(db.activity, { through: 'activityScores' })
 
 
 
