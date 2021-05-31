@@ -112,22 +112,87 @@ exports.update = (req, res) => {
         })
 };
 
-// add new like
-exports.create = (req, res) => {
-
-    const newLike = {
-        activityId: req.params.activityID,
-        userId: req.body.userId
-    }
-
-    Like.create(newLike)
-        .then(data => {
-            res.status(201).json({ message: "New activity created", location: "/activities" + data.id })
+// add one like (user) to one activity 
+exports.addLike = (req, res) => {
+    Activity.findByPk(req.params.activityID)
+        .then(activity => {
+            // console.log(activity)
+            if (activity === null)
+               return res.status(404).json({
+                    message: `Not found Activity with id ${req.params.activityID}.`
+                });
+            else {
+                User.findByPk(req.body.userId)
+                    .then(user => {
+                        // console.log(user)
+                        if (user === null)
+                            return res.status(404).json({
+                                message: `Not found User with id ${req.body.userId}.`
+                            });
+                        else {
+                            user.addActivity(activity)
+                                .then(data => {
+                                    // console.log(data);
+                                    if (data === undefined)
+                                        return res.status(200).json({
+                                            message: `User ${req.body.userId} like was already assigned to Activity ${req.params.activityID}.`
+                                        });
+                                    else
+                                       return  res.status(200).json({
+                                            message: `Added User ${req.body.userId} like to Activity ${req.params.activityID}.`
+                                        });
+                                })
+                        }
+                    })
+            }
         })
         .catch(err => {
-            if (err.name === 'SequelizeValidationError')
-                res.status(404).json({ message: err.errors[0].message });
-            else
-                res.status(500).json({ message: err.message || "Some error occurred while creating the activity!" })
-        })
+            res.status(500).json({
+                message: err.message || `Error adding User ${req.body.userId} to Activity ${req.params.activityID}.`
+            });
+        });
 };
+
+// remove one like (user) from one activity
+exports.removeLike = async (req, res) => {
+    try {
+        let activity = await Activity.findByPk(req.params.activityID)
+
+        // no data returned means there is no activity in DB with that given ID 
+        if (activity === null) {
+            res.status(404).json({
+                message: `Not found Activity with id ${req.params.activityID}.`
+            });
+            return;
+        }
+
+        let user = await User.findByPk(req.body.userId)
+
+        // no data returned means there is no user in DB with that given ID 
+        if (user === null) {
+            res.status(404).json({
+                message: `Not found User with id ${req.body.userId}.`
+            });
+            return;
+        }
+
+        let data = await user.removeActivity(activity)
+
+        // console.log(data);
+        if (data === 1)
+            res.status(200).json({
+                message: `Removed User ${req.body.userId} like to activity ${req.params.activityID}.`
+            });
+        else
+            res.status(404).json({
+                message: `No User ${req.body.userId} associated to activity ${req.params.activityID}.`
+            });
+    }
+    catch (err) {
+        res.status(500).json({
+            message: err.message || `Error adding User ${req.body.userId} to Activity ${req.params.activityID}.`
+        })
+    };
+};
+
+// add one score (user) to one activity

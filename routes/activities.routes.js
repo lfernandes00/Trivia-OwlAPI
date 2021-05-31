@@ -1,7 +1,6 @@
 const express = require('express');
 let router = express.Router();
 const activityController = require('../controllers/activities.controller');
-const likeController = require('../controllers/activityLikes.controller');
 const scoreRouter = require('../routes/activityScores.routes');
 // middleware for all routes related with teams
 router.use((req, res, next) => {
@@ -17,10 +16,13 @@ router.get('/', activityController.findAll);
 
 router.get('/:activityID', activityController.findOne);
 
-router.delete('/:activityID', activityController.remove);
+router.delete('/:activityID/admin', activityController.remove);
 
 router.post('/', activityController.create);
-router.post('/:activityID', likeController.create);
+
+router.post('/:activityID', activityController.addLike);
+
+router.delete('/:activityID', activityController.removeLike);
 
 router.put('/:activityID', activityController.update);
 
