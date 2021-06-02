@@ -10,7 +10,7 @@ const { user } = require("../models/db.js");
 // const userTrophie = require("../models/db.js");
 
 
-// get all users
+// get all users for admin
 exports.findAll = (req, res) => {
     User.findAll({
         include: [
@@ -19,6 +19,20 @@ exports.findAll = (req, res) => {
             }
         ]
     })
+        .then(data => {
+            res.status(200).json(data);
+        })
+        .catch(err => {
+            res.status(500).json({
+                message:
+                    err.message || "Some error occurred while retrieving users."
+            });
+        });
+};
+
+// find all students for classification
+exports.findAllStudents = (req, res) => {
+    User.findAll({where: {typeId: 2}})
         .then(data => {
             res.status(200).json(data);
         })
@@ -55,12 +69,12 @@ exports.findOne = (req, res) => {
 
 // Remove user
 exports.remove = (req, res) => {
-    User.destroy({ where: { id: req.params.userID } })
+    User.destroy({ where: { id: req.body.userId } })
         .then(num => {
             if (num == 1) {
-                res.status(200).json({ message: `User with id ${req.params.userID} deleted with success` })
+                res.status(200).json({ message: `User with id ${req.body.userId } deleted with success` })
             } else {
-                res.status(404).json({ message: `User with id ${req.params.userID} not found!` })
+                res.status(404).json({ message: `User with id ${req.body.userId } not found!` })
             }
         })
         .catch(err => {

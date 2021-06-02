@@ -2,6 +2,7 @@ const express = require('express');
 let router = express.Router();
 const userController = require('../controllers/users.controller');
 const trophyController = require('../controllers/trophies.controller');
+const authController = require('../controllers/auth.controller');
 // middleware for all routes related with teams
 router.use((req, res, next) => {
     const start = Date.now();
@@ -12,18 +13,19 @@ router.use((req, res, next) => {
     next()
 })
 
-router.get('/', userController.findAll);
+router.get('/admin',authController.verifyToken, authController.isAdmin, userController.findAll); // correto
 
-router.get('/:userID', userController.findOne);
+router.get('/',authController.verifyToken, userController.findAllStudents); // correto
 
-router.delete('/:userID', userController.remove);
-// router.delete('/:userID', typeController.remove);
+router.get('/:userID',authController.verifyToken, userController.findOne); // incerto
 
-router.put('/:userID', userController.update);
+router.delete('/admin',authController.verifyToken, authController.isAdmin, userController.remove); // correto
 
-router.get('/:userID/trophies', trophyController.findAll);
+router.patch('/:userID',authController.verifyToken, userController.update); // correto
 
-router.post('/:userID/trophies', trophyController.create);
+router.get('/:userID/trophies',authController.verifyToken, trophyController.findAll); // correto
+
+router.post('/:userID/trophies',authController.verifyToken, trophyController.create); // correto
 
 //send a predefined error message for invalid routes on USERS
 router.all('*', function (req, res) {

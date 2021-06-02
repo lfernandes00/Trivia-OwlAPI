@@ -14,27 +14,27 @@ router.use((req, res, next) => {
     next()
 })
 
-router.get('/', activityController.findAll);
+router.get('/',authController.verifyToken, activityController.findAll); // correto
 
-router.get('/admin', authController.verifyToken, authController.isAdmin, activityController.findAll);
+router.get('/admin', authController.verifyToken, authController.isAdmin, activityController.findAllProposals); // correto
 
-router.get('/:activityID', activityController.findOne);
+router.get('/:activityID',authController.verifyToken, activityController.findOne); // erro na junção
 
-router.delete('/admin', activityController.remove);
+router.delete('/admin',authController.verifyToken, authController.isTeacherOrAdmin, activityController.remove); // correto
 
-router.post('/add', activityController.create);
+router.post('/add',authController.verifyToken, activityController.create); // correto
 
-router.post('/:activityID', activityController.addLike);
+router.post('/:activityID',authController.verifyToken, authController.isStudent, activityController.addLike); // correto
 
-router.delete('/:activityID', activityController.removeLike);
+router.delete('/:activityID',authController.verifyToken,authController.isStudent, activityController.removeLike); // correto
 
-router.patch('/admin', activityController.update);
+router.patch('/admin',authController.verifyToken, authController.isTeacherOrAdmin, activityController.update); // correto
 
-router.get('/:activityID/classification', activityController.findAllScores);
+router.get('/:activityID/classification',authController.verifyToken, activityController.findAllScores); // erro na  junção
 
-router.post('/:activityID/questions', activityController.addScore);
+router.post('/:activityID/questions',authController.verifyToken, activityController.addScore); // correto
 
-router.patch('/:activityID/questions', userController.updateUser);
+router.patch('/:activityID/questions',authController.verifyToken, userController.updateUser); // correto
 
 //send a predefined error message for invalid routes on TEAMS
 router.all('*', function (req, res) {

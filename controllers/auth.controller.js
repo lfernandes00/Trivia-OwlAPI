@@ -64,7 +64,7 @@ exports.signin= async (req, res) => {
         //     });
         // }
         // sign the given payload (user ID) into a JWT payload –builds JWT token,using secret key
-        const token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // 24 hours
+        const token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // 1 hour
         });
         console.log(token)
         
@@ -114,14 +114,30 @@ exports.isAdmin= async (req, res, next) => {
     
 };
 
+exports.isStudent= async (req, res, next) => {
+    let user = await User.findByPk(req.loggedUserId);
+    let type = await user.getUserType();
+
+    console.log(type.name)
+    
+    if (type.name === "estudante") {
+        next();
+    } else {
+        return res.status(403).send({ message: "Require Student Role!" });
+    }
+    
+    
+};
+
 exports.isTeacherOrAdmin= async (req, res, next) => {
     let user = await User.findByPk(req.loggedUserId);
     let type = await user.getUserType();
     
-    if (type.name === "docente" || type.name == "admin") 
+    if (type.name === "admin" || type.name === 'docente') {
         next();
-    
-    return res.status(403).send({ message: "Require Teacher or admin Role!" });
+    } else {
+        return res.status(403).send({ message: "Require Admin or Teacher Role!" });
+    }
 };
 
 exports.isAdminOrLoggedUser= async (req, res, next) => {

@@ -19,13 +19,32 @@ exports.findAll = (req, res) => {
             });
         });
 };
+// get all proposals
+exports.findAllProposals = (req, res) => {
+    Activity.findAll({where: {pending: 0}})
+        .then(data => {
+            if (data == 0) {
+                res.status(404).json({message: `0 proposals found`})
+            } else {
+                res.status(200).json(data);
+            }
+            
+        })
+        .catch(err => {
+            res.status(500).json({
+                message:
+                    err.message || "Some error occurred while retrieving activities."
+            });
+        });
+};
+
 
 // get activity by id
 exports.findOne = (req, res) => {
     Activity.findByPk(req.params.activityID, {
         include: [
             {
-                model: User, through: { attributes: ["score"] }
+                model: User, attributes: ["id"]
             }
         ]
     })
@@ -261,7 +280,17 @@ exports.findAllScores = async (req, res) => {
         // WITHOUT activity info
         let scores = await activity.getUsers();
         console.log(scores)
-        res.status(200).json(scores);
+
+        if (scores.length === 0) {
+            res.status(404).json({
+                message: `Activity with id ${req.params.activityID} has no scores.`
+            });
+            return;
+        } else {
+            res.status(200).json(scores);
+            return;
+        }
+        
 
     }
     catch (err) {
