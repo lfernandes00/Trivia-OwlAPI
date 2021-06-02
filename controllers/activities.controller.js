@@ -2,6 +2,7 @@
 const db = require("../models/db.js");
 const Activity = db.activity;
 const User = db.user;
+const Score = db.Score;
 
 const { Op } = require('sequelize');
 
@@ -24,7 +25,7 @@ exports.findOne = (req, res) => {
     Activity.findByPk(req.params.activityID, {
         include: [
             {
-                model: User, through: { attributes: ['userId'] }
+                model: User, through: { attributes: ["score"] }
             }
         ]
     })
@@ -41,12 +42,12 @@ exports.findOne = (req, res) => {
 
 // Remove activity
 exports.remove = (req, res) => {
-    Activity.destroy({ where: { id: req.params.activityID } })
+    Activity.destroy({ where: { id: req.body.activityId } })
         .then(num => {
             if (num == 1) {
-                res.status(200).json({ message: `Activity with id ${req.params.activityID} deleted with success` })
+                res.status(200).json({ message: `Activity with id ${req.body.activityId} deleted with success` })
             } else {
-                res.status(404).json({ message: `Activity with id ${req.params.activityID} not found!` })
+                res.status(404).json({ message: `Activity with id ${req.body.activityId} not found!` })
             }
         })
         .catch(err => {
@@ -93,15 +94,15 @@ exports.update = (req, res) => {
         return;
     }
 
-    Activity.update(req.body, { where: { id: req.params.activityID } })
+    Activity.update(req.body, { where: { id: req.body.activityId } })
         .then(num => {
             if (num == 1) {
                 res.status(200).json({
-                    message: `Activity id=${req.params.activityID} was updated successfully.`
+                    message: `Activity id=${req.body.activityId} was updated successfully.`
                 });
             } else {
                 res.status(404).json({
-                    message: `Activity with id=${req.params.activityID} not found!`
+                    message: `Activity with id=${req.body.activityId} not found!`
                 })
             }
         })
@@ -196,3 +197,76 @@ exports.removeLike = async (req, res) => {
 };
 
 // add one score (user) to one activity
+exports.addScore = async (req, res) => {
+    try {
+        let activity = await Activity.findByPk(req.params.activityID);
+
+        // no data returned means there is no activity in DB with that given ID 
+        if (activity === null) {
+            res.status(404).json({
+                message: `Not found Tutorial with id ${req.params.activityID}.`
+            });
+            return;
+        }
+        console.log(activity)
+
+        let user = await User.findByPk(req.body.userId);
+
+        // no data returned means there is no user in DB with that given ID 
+        if (user === null) {
+            res.status(404).json({
+                message: `Not found Tutorial with id ${req.body.userId}.`
+            });
+            return;
+        }
+        console.log(user)
+
+        let newScore = {
+            activityId: req.params.activityID,
+            userId: req.body.userId,
+            score: req.body.score
+        }
+        console.log("new score", newScore)
+
+        let score = await Score.create(newScore);
+        console.log("score:", score)
+        await activity.addUser(score)
+
+        res.status(201).json({ message: "New Score created.", location: "/activities/" + req.params.activityID + "/classification/"});
+
+    }
+    catch (err) {
+        console.log(err)
+        if (err.name === 'SequelizeValidationError')
+            res.status(400).json({ message: err.errors[0].message });
+        else
+            res.status(500).json({
+                message: err.message || "Some error occurred while creating the Score."
+            });
+    }
+};
+
+// get all activity scores
+exports.findAllScores = async (req, res) => {
+    try {
+        let activity = await Activity.findByPk(req.params.activityID);
+
+        // no data returned means there is no activity in DB with that given ID 
+        if (activity === null) {
+            res.status(404).json({
+                message: `Not found Activity with id ${req.params.activityID}.`
+            });
+            return;
+        }
+        // WITHOUT activity info
+        let scores = await activity.getUsers();
+        console.log(scores)
+        res.status(200).json(scores);
+
+    }
+    catch (err) {
+        res.status(500).json({
+            message: err.message || `Error retrieving Scores for Activity with id ${req.params.activityID}.`
+        });
+    }
+};

@@ -1,9 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     const Type = sequelize.define("userType", {
-        type: {
+        name: {
             type: DataTypes.STRING,
             allowNull:false,
-            validate: {notNull: {msg: "type can not be empty!"}}
+            validate: {notNull: {msg: "name can not be empty!"}}
         }
     }, {
         timestamps: false

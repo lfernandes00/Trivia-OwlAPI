@@ -11,7 +11,9 @@
 //     next()
 // })
 
-// router.get('/', userController.findAll);
+// router.get('/', trophieController.findAll);
+
+
 
 // //send a predefined error message for invalid routes on TEAMS
 // router.all('*', function (req, res) {
