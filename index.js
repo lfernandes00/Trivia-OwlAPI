@@ -17,7 +17,8 @@ app.use('/users', require('./routes/users.routes.js'));
 // routing middleware for resource activities
 app.use('/activities', require('./routes/activities.routes.js'));
 
-app.use('/Home', require('./routes/auth.routes.js'));
+// routing middleware for home page
+app.use('/', require('./routes/auth.routes.js'));
 
 // routing middleware for resource USER AUTH
 // app.use('/userAuth', require('./routes/userAuth.routes.js'))

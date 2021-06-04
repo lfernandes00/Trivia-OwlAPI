@@ -1,5 +1,6 @@
 const express = require('express');
 const authController= require("../controllers/auth.controller");
+const userController = require("../controllers/users.controller")
 let router = express.Router();
 
 router.use((req, res, next) => {
@@ -7,11 +8,11 @@ router.use((req, res, next) => {
     next()
 })
 
-router.route('/signup')
-    .post(authController.signup);
+router.post('/home/signup', authController.signup);
 
-router.route('/signin')
-    .post(authController.signin)
+router.post('/', authController.signin);
+
+router.get('/', userController.findAllStudents);
 
 
 router.all('*', function (req, res) {   

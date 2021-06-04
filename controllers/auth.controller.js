@@ -72,8 +72,15 @@ exports.signin= async (req, res) => {
         return res.status(200).json({
             id: user.id, 
             username: user.username,
+            password: user.password,
             name: user.name,
-            type: type.name.toUpperCase(),
+            birthDate: user.birthDate,
+            course: user.course,
+            level: user.level,
+            photo: user.photo,
+            doneActivities: user.doneActivities,
+            points: user.points,
+            type: type.name,
             accessToken: token
         });
     } 
