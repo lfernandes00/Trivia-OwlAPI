@@ -52,7 +52,7 @@ exports.findOne = (req, res) => {
                 model: Type, attributes: ["name"] // remove ALL data retrieved from join table
             },
             {
-                model: Activity, attributes: ["id"] // user trophies
+                model: Activity, as: 'Scores', attributes: ["id"] // user trophies
             }
         ]
     })

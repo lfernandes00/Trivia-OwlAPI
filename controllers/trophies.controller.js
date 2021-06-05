@@ -36,11 +36,11 @@ exports.create = (req, res) => {
                     message: `Not found Trophy with id ${req.body.trophyId}.`
                 });
             else {
-                User.findByPk(req.params.userID)
+                User.findByPk(req.body.userId)
                     .then(user => {
                         if (user === null)
                             return res.status(404).json({
-                                message: `Not found User with id ${req.params.userID}.`
+                                message: `Not found User with id ${req.body.userId}.`
                             });
                         else {
                             user.addTrophie(trophy)
@@ -48,11 +48,11 @@ exports.create = (req, res) => {
                                     // console.log(data);
                                     if (data === undefined)
                                         return res.status(200).json({
-                                            message: `User ${req.params.userID} was already assigned to Trophy ${req.body.trophyId}.`
+                                            message: `User ${req.body.userId} was already assigned to Trophy ${req.body.trophyId}.`
                                         });
                                     else
                                        return  res.status(200).json({
-                                            message: `Added User ${req.params.userID} to Trophy ${req.body.trophyId}.`
+                                            message: `Added User ${req.body.userId} to Trophy ${req.body.trophyId}.`
                                         });
                                 })
                         }
@@ -61,7 +61,7 @@ exports.create = (req, res) => {
         })
         .catch(err => {
             res.status(500).json({
-                message: err.message || `Error adding USer ${req.params.userID} to Trophy ${req.body.trophyId}.`
+                message: err.message || `Error adding USer ${req.body.userId} to Trophy ${req.body.trophyId}.`
             });
         });
 };

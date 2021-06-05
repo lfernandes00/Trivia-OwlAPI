@@ -58,11 +58,11 @@ exports.signin= async (req, res) => {
         );
         console.log("asd", passwordIsValid)
         
-        // if (!passwordIsValid) {
-        //     return res.status(401).json({
-        //         accessToken: null, message: "Invalid Password!"
-        //     });
-        // }
+        if (!passwordIsValid) {
+            return res.status(401).json({
+                accessToken: null, message: "Invalid Password!"
+            });
+        }
         // sign the given payload (user ID) into a JWT payload –builds JWT token,using secret key
         const token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // 1 hour
         });

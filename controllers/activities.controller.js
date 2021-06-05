@@ -44,7 +44,7 @@ exports.findOne = (req, res) => {
     Activity.findByPk(req.params.activityID, {
         include: [
             {
-                model: User, attributes: ["id"]
+                model: User, as: 'Likes', attributes: ["id"]
             }
         ]
     })
@@ -278,7 +278,7 @@ exports.findAllScores = async (req, res) => {
             return;
         }
         // WITHOUT activity info
-        let scores = await activity.getUsers();
+        let scores = await activity.getScores();
         console.log(scores)
 
         if (scores.length === 0) {

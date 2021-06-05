@@ -8,11 +8,9 @@ router.use((req, res, next) => {
     next()
 })
 
-router.post('/home/signup', authController.signup);
+router.post('/signup', authController.signup);
 
-router.post('/', authController.signin);
-
-router.get('/', userController.findAllStudents);
+router.post('/signin', authController.signin);
 
 
 router.all('*', function (req, res) {   

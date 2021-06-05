@@ -3,7 +3,7 @@ let router = express.Router();
 const activityController = require('../controllers/activities.controller');
 const authController = require('../controllers/auth.controller')
 const userController = require('../controllers/users.controller');
-const trophieController = require('../controllers/trophies.controller');
+const trophyController = require('../controllers/trophies.controller');
 // middleware for all routes related with teams
 router.use((req, res, next) => {
     const start = Date.now();
@@ -18,7 +18,7 @@ router.get('/',authController.verifyToken, activityController.findAll); // corre
 
 router.get('/admin', authController.verifyToken, authController.isAdmin, activityController.findAllProposals); // correto
 
-router.get('/:activityID',authController.verifyToken, activityController.findOne); // erro na junção
+router.get('/:activityID',authController.verifyToken, activityController.findOne); // correto
 
 router.delete('/admin',authController.verifyToken, authController.isTeacherOrAdmin, activityController.remove); // correto
 
@@ -30,13 +30,15 @@ router.delete('/:activityID',authController.verifyToken,authController.isStudent
 
 router.patch('/admin',authController.verifyToken, authController.isTeacherOrAdmin, activityController.update); // correto
 
-router.get('/:activityID/classification',authController.verifyToken, activityController.findAllScores); // erro na  junção
+router.get('/:activityID/classification',authController.verifyToken, activityController.findAllScores); // correto
 
 router.post('/:activityID/questions',authController.verifyToken, activityController.addScore); // correto
 
 router.patch('/:activityID/questions',authController.verifyToken, userController.updateUser); // correto
 
-//send a predefined error message for invalid routes on TEAMS
+router.post('/:activityID/questions/trophy',authController.verifyToken, trophyController.create); // correto
+
+//send a predefined error message for invalid routes on ACTIVITIES
 router.all('*', function (req, res) {
     res.status(404).json({ message: 'ACTIVITIES: what???' });
 })

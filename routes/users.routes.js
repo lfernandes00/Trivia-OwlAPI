@@ -17,7 +17,7 @@ router.get('/admin',authController.verifyToken, authController.isAdmin, userCont
 
 router.get('/',authController.verifyToken, userController.findAllStudents); // correto
 
-router.get('/:userID',authController.verifyToken, userController.findOne); // incerto
+router.get('/:userID',authController.verifyToken, userController.findOne); // correto
 
 router.delete('/admin',authController.verifyToken, authController.isAdmin, userController.remove); // correto
 
@@ -25,7 +25,7 @@ router.patch('/:userID',authController.verifyToken, userController.update); // c
 
 router.get('/:userID/trophies',authController.verifyToken, trophyController.findAll); // correto
 
-router.post('/:userID/trophies',authController.verifyToken, trophyController.create); // correto
+ // correto mas precisa de mudar de rota
 
 //send a predefined error message for invalid routes on USERS
 router.all('*', function (req, res) {

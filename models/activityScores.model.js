@@ -14,8 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         score: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-            validate: { notNull: { msg: "score can not be empty!" } }
         },
     }, {
         timestamps: false
