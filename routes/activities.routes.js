@@ -36,7 +36,6 @@ router.post('/:activityID/questions',authController.verifyToken, activityControl
 
 router.patch('/:activityID/questions',authController.verifyToken, userController.updateUser); // correto
 
-router.post('/:activityID/questions/trophy',authController.verifyToken, trophyController.create); // correto
 
 //send a predefined error message for invalid routes on ACTIVITIES
 router.all('*', function (req, res) {

@@ -8,7 +8,13 @@ const { Op } = require('sequelize');
 
 // get all activities
 exports.findAll = (req, res) => {
-    Activity.findAll()
+    Activity.findAll({
+        include: [
+            {
+                model: User, as: 'Likes'
+            }
+        ]
+    })
         .then(data => {
             res.status(200).json(data);
         })
@@ -45,6 +51,9 @@ exports.findOne = (req, res) => {
         include: [
             {
                 model: User, as: 'Likes', attributes: ["id"]
+            },
+            {
+                model: User, as: 'Scores', attributes: ["id"]
             }
         ]
     })
@@ -150,7 +159,7 @@ exports.addLike = (req, res) => {
                                 message: `Not found User with id ${req.body.userId}.`
                             });
                         else {
-                            user.addActivity(activity)
+                            user.addLike(activity)
                                 .then(data => {
                                     // console.log(data);
                                     if (data === undefined)
@@ -196,7 +205,7 @@ exports.removeLike = async (req, res) => {
             return;
         }
 
-        let data = await user.removeActivity(activity)
+        let data = await user.removeLike(activity)
 
         // console.log(data);
         if (data === 1)
@@ -249,7 +258,6 @@ exports.addScore = async (req, res) => {
 
         let score = await Score.create(newScore);
         console.log("score:", score)
-        await activity.addUser(score)
 
         res.status(201).json({ message: "New Score created.", location: "/activities/" + req.params.activityID + "/classification/"});
 
