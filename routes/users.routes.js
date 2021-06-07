@@ -19,7 +19,7 @@ router.get('/students',authController.verifyToken, userController.findAllStudent
 
 router.get('/:userID',authController.verifyToken, userController.findOne); // correto
 
-router.delete('/admin',authController.verifyToken, authController.isAdmin, userController.remove); // correto
+router.delete('/:userID',authController.verifyToken, authController.isAdmin, userController.remove); // correto
 
 router.patch('/:userID',authController.verifyToken, userController.update); // correto
 

@@ -69,12 +69,12 @@ exports.findOne = (req, res) => {
 
 // Remove user
 exports.remove = (req, res) => {
-    User.destroy({ where: { id: req.body.userId } })
+    User.destroy({ where: { id: req.params.userID } })
         .then(num => {
             if (num == 1) {
-                res.status(200).json({ message: `User with id ${req.body.userId } deleted with success` })
+                res.status(200).json({ message: `User with id ${req.params.userID } deleted with success` })
             } else {
-                res.status(404).json({ message: `User with id ${req.body.userId } not found!` })
+                res.status(404).json({ message: `User with id ${req.params.userID } not found!` })
             }
         })
         .catch(err => {
