@@ -20,7 +20,7 @@ router.get('/admin', authController.verifyToken, authController.isAdmin, activit
 
 router.get('/:activityID',authController.verifyToken, activityController.findOne); // correto
 
-router.delete('/admin',authController.verifyToken, authController.isTeacherOrAdmin, activityController.remove); // correto
+router.delete('/:activityID',authController.verifyToken, authController.isTeacherOrAdmin, activityController.remove); // correto
 
 router.post('/add',authController.verifyToken, activityController.create); // correto
 

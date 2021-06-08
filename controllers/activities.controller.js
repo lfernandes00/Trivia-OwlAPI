@@ -70,12 +70,12 @@ exports.findOne = (req, res) => {
 
 // Remove activity
 exports.remove = (req, res) => {
-    Activity.destroy({ where: { id: req.body.activityId } })
+    Activity.destroy({ where: { id: req.params.activityID } })
         .then(num => {
             if (num == 1) {
-                res.status(200).json({ message: `Activity with id ${req.body.activityId} deleted with success` })
+                res.status(200).json({ message: `Activity with id ${req.params.activityID} deleted with success` })
             } else {
-                res.status(404).json({ message: `Activity with id ${req.body.activityId} not found!` })
+                res.status(404).json({ message: `Activity with id ${req.params.activityID} not found!` })
             }
         })
         .catch(err => {
