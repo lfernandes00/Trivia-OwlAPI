@@ -12,7 +12,7 @@ const { user } = require("../models/db.js");
 
 // get all users for admin
 exports.findAll = (req, res) => {
-    User.findAll({
+    User.findAll({where: {typeId: [2,3]},
         include: [
             {
                 model: Type, attributes: ["name"] // remove ALL data retrieved from join table
