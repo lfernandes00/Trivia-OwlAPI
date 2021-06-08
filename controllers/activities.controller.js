@@ -11,7 +11,7 @@ exports.findAll = (req, res) => {
     Activity.findAll({where: {pending: 1},
         include: [
             {
-                model: User, as: 'Likes'
+                model: User, as: 'Likes', attributes: ["id"]
             }
         ]
     })
@@ -122,15 +122,15 @@ exports.update = (req, res) => {
         return;
     }
 
-    Activity.update(req.body, { where: { id: req.body.activityId } })
+    Activity.update(req.body, { where: { id: req.params.activityID } })
         .then(num => {
             if (num == 1) {
                 res.status(200).json({
-                    message: `Activity id=${req.body.activityId} was updated successfully.`
+                    message: `Activity id=${req.params.activityID} was updated successfully.`
                 });
             } else {
                 res.status(404).json({
-                    message: `Activity with id=${req.body.activityId} not found!`
+                    message: `Activity with id=${req.params.activityID} not found!`
                 })
             }
         })

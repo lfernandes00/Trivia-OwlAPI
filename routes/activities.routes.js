@@ -28,7 +28,7 @@ router.post('/:activityID',authController.verifyToken, authController.isStudent,
 
 router.delete('/:activityID',authController.verifyToken,authController.isStudent, activityController.removeLike); // correto
 
-router.patch('/admin',authController.verifyToken, authController.isTeacherOrAdmin, activityController.update); // correto
+router.patch('/:activityID',authController.verifyToken, authController.isTeacherOrAdmin, activityController.update); // correto
 
 router.get('/:activityID/classification',authController.verifyToken, activityController.findAllScores); // correto
 
