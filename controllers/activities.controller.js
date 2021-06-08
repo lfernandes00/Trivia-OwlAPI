@@ -8,7 +8,7 @@ const { Op } = require('sequelize');
 
 // get all activities
 exports.findAll = (req, res) => {
-    Activity.findAll({where: {pending: 1}},{
+    Activity.findAll({where: {pending: 1},
         include: [
             {
                 model: User, as: 'Likes'

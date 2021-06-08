@@ -92,7 +92,7 @@ exports.update = (req, res) => {
                     message: `User id=${req.params.userID} was updated successfully.`
                 });
             } else {
-                res.status(200).json({
+                res.status(404).json({
                     message: `No updates were made on User id=${req.params.userID}.`
                 });
             }
