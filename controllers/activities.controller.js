@@ -167,7 +167,7 @@ exports.addLike = (req, res) => {
                                             message: `User ${req.body.userId} like was already assigned to Activity ${req.params.activityID}.`
                                         });
                                     else
-                                       return  res.status(200).json({
+                                       return  res.status(201).json({
                                             message: `Added User ${req.body.userId} like to Activity ${req.params.activityID}.`
                                         });
                                 })
