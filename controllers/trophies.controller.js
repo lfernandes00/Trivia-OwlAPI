@@ -51,7 +51,7 @@ exports.create = (req, res) => {
                                             message: `User ${req.body.userId} was already assigned to Trophy ${req.body.trophyId}.`
                                         });
                                     else
-                                       return  res.status(200).json({
+                                       return  res.status(201).json({
                                             message: `Added User ${req.body.userId} to Trophy ${req.body.trophyId}.`
                                         });
                                 })
