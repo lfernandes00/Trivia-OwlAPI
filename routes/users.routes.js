@@ -15,7 +15,7 @@ router.use((req, res, next) => {
 
 router.get('/admin',authController.verifyToken, authController.isAdmin, userController.findAll); // correto
 
-router.get('/students',authController.verifyToken, userController.findAllStudents); // correto
+router.get('/students', userController.findAllStudents); // correto
 
 router.get('/:userID',authController.verifyToken, userController.findOne); // correto
 

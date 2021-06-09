@@ -14,7 +14,7 @@ router.use((req, res, next) => {
     next()
 })
 
-router.get('/',authController.verifyToken, activityController.findAll); // correto
+router.get('/', activityController.findAll); // correto
 
 router.get('/admin', authController.verifyToken, authController.isAdmin, activityController.findAllProposals); // correto
 
