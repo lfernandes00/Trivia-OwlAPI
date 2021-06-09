@@ -30,6 +30,8 @@ router.delete('/:activityID',authController.verifyToken,authController.isStudent
 
 router.patch('/:activityID',authController.verifyToken, authController.isTeacherOrAdmin, activityController.update); // correto
 
+router.patch('/:activityID/admin',authController.verifyToken, authController.isTeacherOrAdmin, activityController.updateActivity); // correto
+
 router.get('/:activityID/classification',authController.verifyToken, activityController.findAllScores); // correto
 
 router.post('/:activityID/questions',authController.verifyToken, activityController.addScore); // correto

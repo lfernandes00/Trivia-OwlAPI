@@ -141,6 +141,27 @@ exports.update = (req, res) => {
         })
 };
 
+exports.updateActivity = (req, res) => {
+
+    Activity.update(req.body, { where: { id: req.params.activityID } })
+        .then(num => {
+            if (num == 1) {
+                res.status(200).json({
+                    message: `Activity id=${req.params.activityID} was updated successfully.`
+                });
+            } else {
+                res.status(404).json({
+                    message: `Activity with id=${req.params.activityID} not found!`
+                })
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: err.message || "Some error occurred while updating the activity!"
+            })
+        })
+};
+
 // add one like (user) to one activity 
 exports.addLike = (req, res) => {
     Activity.findByPk(req.params.activityID)
