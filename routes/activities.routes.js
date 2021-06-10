@@ -16,7 +16,7 @@ router.use((req, res, next) => {
 
 router.get('/', activityController.findAll); // correto
 
-router.get('/admin', authController.verifyToken, authController.isAdmin, activityController.findAllProposals); // correto
+router.get('/admin', authController.verifyToken, authController.isTeacherOrAdmin, activityController.findAllProposals); // correto
 
 router.get('/:activityID',authController.verifyToken, activityController.findOne); // correto
 
